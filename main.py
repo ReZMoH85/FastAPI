@@ -118,6 +118,38 @@ def three_digit_even_body(data: LimitInput):
     results = [num for num in range(100, 100 + data.limit) if all(int(d) % 2 == 0 for d in str(num))]
     return {"numbers": results}
 
+# Question Nummber 5
+# Path Parameter
+@app.get("/triangle_pattern/{number}")
+def triangle(number: int):
+    result = []  
+    for i in range(1, number + 1):
+        row = " ".join(str(i * j) for j in range(1, i + 1)) 
+        result.append(row)  
+    return {"pattern": result}
+
+# Query Paramater
+@app.get("/triangle_pattern")
+def triangle(number: int = Query(...)):
+    result = []  
+    for i in range(1, number + 1):
+        row = " ".join(str(i * j) for j in range(1, i + 1)) 
+        result.append(row)  
+    return {"pattern": result}
+
+# Body Parameter
+class NumberInput(BaseModel):
+    number: int
+
+@app.post("/triangle_pattern")
+def triangle(data: NumberInput):
+    result = []  
+    for i in range(1, data.number + 1):
+        row = " ".join(str(i * j) for j in range(1, i + 1)) 
+        result.append(row)  
+    return {"pattern": result}
+
+
 # Question number 6
 # Path Parameter
 @app.get("/compute-statistics/{values}")
